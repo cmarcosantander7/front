@@ -46,6 +46,7 @@ import {
   SeguimientomensualplanificacionComponent
 } from "./seguimientomensualplanificacion/seguimientomensualplanificacion.component";
 import { Firmaranexo9Component } from './firmaranexo9/firmaranexo9.component';
+import { Registrobeneficiarios12Component } from './registrobeneficiarios12/registrobeneficiarios12.component';
 
 const routes: Routes = [
   {path:'bienvenida',
@@ -129,6 +130,8 @@ const routes: Routes = [
     component: Veranexo9Component
   },{ path: 'firmar_seguimiento_mensual/:cedula/:nombres',
     component: Firmaranexo9Component
+  },{ path: 'registro_beneficiarios/:cedula/:nombres',
+    component: Registrobeneficiarios12Component
   }]
 
 @NgModule({
@@ -172,7 +175,8 @@ const routes: Routes = [
     Anexo7planificacionmensualComponent,
     SeguimientomensualplanificacionComponent,
     Veranexo9Component,
-    Firmaranexo9Component
+    Firmaranexo9Component,
+    Registrobeneficiarios12Component
   ],
   imports: [
     CommonModule,

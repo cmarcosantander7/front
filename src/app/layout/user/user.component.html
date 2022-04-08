@@ -147,6 +147,19 @@
               <button mat-button class="id-menus" [routerLink]="['/panelusuario/proyectovinculacion/ver_seguimiento_mensual',persona.cedula, persona.nombrescompletos]"
                       routerLinkActive="active">-Ver Anexo9</button>
             </mat-expansion-panel>
+            <br>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  REGISTRO BENEFICIARIOS CAPACITACIONES
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <!--Redireccion con los routerlink-->
+              <button mat-button class="id-menus" [routerLink]="['/panelusuario/proyectovinculacion/registro_beneficiarios',persona.cedula, persona.nombrescompletos]"
+                      routerLinkActive="active">-Registro capacitaciones</button>
+
+            </mat-expansion-panel>
           </div>
 
           <!--Director-->

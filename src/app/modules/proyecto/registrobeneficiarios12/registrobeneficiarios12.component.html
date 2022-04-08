@@ -1,0 +1,83 @@
+<div *ngIf="issloading == false">
+  <mat-stepper mat-stepper orientation="vertical" [linear]="isLinear" #stepper>>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Datos de proyecto</ng-template>
+        <mat-card class="example-card">
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-subtitle>ANEXO 12</mat-card-subtitle>
+          <mat-card-title>INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY</mat-card-title>
+          <mat-card-title>COORDINACIÓN DE VINCULACIÓN CON LA SOCIEDAD</mat-card-title>
+          <mat-card-title>REGISTRO DE BENEFICIARIOS / CAPACITACIONES</mat-card-title>
+        </mat-card>
+        <br>
+        <mat-card class="example-card">
+          <mat-card-title>DATOS PROYECTO</mat-card-title>
+        </mat-card>
+
+        <br>
+        <mat-card-content>
+          <mat-card class="example-card">
+            <mat-list>
+              <mat-list-item>Nombre del proyecto: {{proyectoSelect.nombre}}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>Fecha Capacitación: <input type="date" formControlName="fecha">
+                <h1 style="color: white">.....................................</h1>
+                No. Horas: <input type="number" formControlName="fecha">
+                </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>Entidad Beneficiaria: {{entidadSelect.nombre}}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>Representante: {{entidadSelect.representante}}
+                <h1 style="color: white">......</h1>
+                Teléfono: {{entidadSelect.telefonoEntidad}}
+                <h1 style="color: white">......</h1>
+                Email Representante: {{entidadSelect.emailRepresentante}}
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>Asunto: <input id="asunto" type="text" formControlName="fecha"></mat-list-item>
+
+            </mat-list>
+          </mat-card>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <br>
+        <div style="text-align: end">
+          <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px">
+            <mat-icon>undo</mat-icon>
+          </button>
+          <button mat-fab matStepperNext color="primary">
+            <mat-icon>queue_play_next</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Agregar Beneficiarios">
+      <form [formGroup]="secondFormGroup">
+        <mat-card class="example-card">
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-subtitle>ANEXO 12</mat-card-subtitle>
+          <mat-card-title>INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY</mat-card-title>
+          <mat-card-title>COORDINACIÓN DE VINCULACIÓN CON LA SOCIEDAD</mat-card-title>
+          <mat-card-title>REGISTRO DE BENEFICIARIOS / CAPACITACIONES</mat-card-title>
+        </mat-card>
+        <mat-card-content>
+          <mat-grid-list cols="3" rowHeight="6:1.10" [formGroup]="secondFormGroup">
+            <div style="margin-top: 15px">
+              <mat-grid-tile colspan="3" >
+                <button mat-fab color="primary" (click)="onAddRow('')" ><mat-icon>add_circle</mat-icon></button>
+              </mat-grid-tile>
+              <br>
+              <mat-grid-tile colspan="3" *ngFor="let row of secondFormGroup.get('rows')?.controls;let index = index;">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nombres Completos</mat-label>
+                <input matInput type="number"  min="0" max="100" [formControl]="row.get('controlEstudiante')"  placeholder="Avance de la Actividad (%)" [required]>
+              </mat-form-field>
+              </mat-grid-tile>
+            </div>
+          </mat-grid-list>
+        </mat-card-content>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>
