@@ -1,0 +1,102 @@
+<div *ngIf="issloading==false">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="ACTIVIDADES">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>ACTIVIDADES QUE SE VAN REALIZAR EN EL PROYECTO</mat-card-title>
+          <mat-card-subtitle>ACTIVIDADES</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-grid-list cols="3" rowHeight="6:1.10" [formGroup]="addForm">
+            <div style="margin-top: 15px">
+              <h3>ACTIVIDADES DEL PROYECTO</h3>
+              <mat-grid-tile colspan="3" >
+                <button mat-fab color="primary" (click)="onAddRow('')" *ngIf="addForm.get('rows')"><mat-icon>add_circle</mat-icon></button>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="3" *ngFor="let row of addForm.get('rows')?.controls;let index = index;">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Objetivo Especifico {{index}}</mat-label>
+                  <input matInput  [formControl]="row.get('descripcion')"  placeholder="Ex. Realizar..." [required]>
+                </mat-form-field>
+                <span class="example-spacer"></span>
+                <button mat-mini-fab color="warn" style="margin-left: 50px" (click)="onRemoveRow(index)" [disabled]=""><mat-icon>delete_sweep</mat-icon></button>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="3">
+                <div>
+                  <button type="submit" mat-raised-button color="primary" (click)="agregarActividades(proyecto)" [disabled]="addForm.invalid">GUARDAR</button>
+                  <button mat-raised-button color="warn"  style="margin-left: 5px" [routerLink]="['/panelusuario/proyectovinculacion/verproyectos1',cedula]" >CANCELAR</button>
+                </div>
+              </mat-grid-tile>
+            </div>
+          </mat-grid-list>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="REQUISTOS">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>BIENVENIDOS A LA PLATAFORMA DE VINCULACIÓN A LA SOCIEDAD</mat-card-title>
+          <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div id ="contenedor">
+            <div id ="izquierda">
+              <mat-form-field appearance="outline" style="width: 90%">
+                <mat-label>BUSCAR MATERIAS</mat-label>
+                <input matInput  placeholder="FILTRAR" [formControl]="myControl">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+              <br>
+              <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+                <div *ngFor="let materias of filteredOptions | async">
+                  <mat-card style="margin-top: 3px" class="example-card">
+                    {{materias.nombre}}
+                    <button mat-button color="primary" (click)="addMaterias(materias)">Agregar
+                      <mat-icon matBadgeColor="warn">keyboard_arrow_right</mat-icon>
+                    </button>
+                  </mat-card>
+                </div>
+              </cdk-virtual-scroll-viewport>
+            </div>
+            <div id ="derecha">
+              <mat-form-field appearance="outline" style="width: 90%">
+                <mat-label>BUSCAR MATERIAS</mat-label>
+                <input matInput  placeholder="FILTRAR">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+              <br>
+              <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+                <div *ngFor="let materias of seleccionmaterias">
+                  <mat-card style="margin-top: 3px" class="example-card">
+                    {{materias.nombre}}
+                    <button mat-button color="warn" (click)="removeMaterias(materias)">
+                      <mat-icon matBadgeColor="warn">keyboard_arrow_left</mat-icon>
+                      Remover
+                    </button>
+                  </mat-card>
+                </div>
+              </cdk-virtual-scroll-viewport>
+            </div>
+          </div>
+          <br>
+          <div style="text-align: center">
+            <button type="submit" mat-raised-button color="primary" (click)="agregarMaterias(proyecto)">GUARDAR</button>
+            <button mat-raised-button color="warn" style="margin-left: 5px" [routerLink]="['/panelusuario/proyectovinculacion/verproyectos1',cedula]">CANCELAR</button>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+        </mat-card-actions>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

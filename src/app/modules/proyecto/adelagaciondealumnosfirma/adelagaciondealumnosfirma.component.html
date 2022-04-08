@@ -1,0 +1,51 @@
+<div *ngIf="issloading==false">
+  <mat-card>
+    <mat-card-title>FIRMA DE ANEXO 4</mat-card-title>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>BUSCAR PROYECTO</mat-label>
+      <input matInput   placeholder="FILTRAR" [formControl]="myControl">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </mat-card>
+  <br>
+  <div  *ngIf="isexist">
+    <div *ngFor="let anexo5 of filteredOptions | async">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-subtitle>Resposanble: {{anexo5.nonbreDocenteEmisor}}</mat-card-subtitle>
+          <mat-card-title>{{anexo5.nombreProyecto}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Carrera: {{anexo5.siglasCarrera}}</p>
+          <p>Fecha de delegacón: {{anexo5.fechaEmision | date:"longDate"}}</p>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Alumnos a cargo
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngFor="let alumnos of anexo5.alumnos">{{alumnos.cedulaEstudiante}} {{alumnos.nombreEstudiante}}</p>
+          </mat-expansion-panel>
+          <mat-divider></mat-divider>
+          <br>
+          <button mat-raised-button color="primary" (click)="convertFile(anexo5.documento)">DESCARGAR DOCUMENTO</button>
+          <button mat-raised-button color="accent" style="margin-left: 5px" (click)="update(anexo5)">SUBIR DOCUMENTO</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>No tiene anexos</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>
+

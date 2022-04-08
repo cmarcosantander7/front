@@ -1,0 +1,9 @@
+.example-card {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.example-header-image {
+  background-image: url('src/assets/images/LogoCiculo.png');
+  background-size: cover;
+}

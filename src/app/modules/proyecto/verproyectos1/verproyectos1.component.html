@@ -1,0 +1,97 @@
+<div *ngIf="issloading==false">
+  <mat-card>
+    <mat-card-title>ENTIDADES BENEFICARIAS REGISTRADAS</mat-card-title>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>BUSCAR PROYECTO</mat-label>
+      <input matInput   placeholder="FILTRAR" [formControl]="myControl">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </mat-card>
+  <br>
+  <div *ngIf="isexist">
+    <div *ngFor="let proyecto of filteredOptions | async">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-subtitle>Resposanble: {{proyecto.nombreresponsable}}</mat-card-subtitle>
+          <mat-card-title>{{proyecto.nombre}}</mat-card-title>
+          <span class="example-spacer"></span>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/panelusuario/proyectovinculacion/agregaractividadesyrequisitos',proyecto.id,cedula]">
+              <mat-icon color="primary">devices_other</mat-icon>
+              <span>Actividades y Materias</span>
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Carrera: {{proyecto.carrera}}</p>
+          <p>Fecha de Inico y Fin: {{proyecto.fechaFin | date:"longDate"}} - {{proyecto.fechaFin | date:"longDate"}}</p>
+          <p>Director: {{proyecto.nombredirector}}</p>
+          <p>Plazo: {{proyecto.plazoEjecucion}}</p>
+          <p>Objetivo General: {{proyecto.objetivoGeneral}}</p>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Objetivos especificos
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngFor="let objetivos of proyecto.objetivosEspecificosProyecto" > {{objetivos.descripcion}}</p>
+          </mat-expansion-panel>
+          <br>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Más información.
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Actividades
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p *ngFor="let actividales of proyecto.actividadeslistProyectos" > {{actividales.descripcion}}</p>
+            </mat-expansion-panel>
+            <br>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Requisitos
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p *ngFor="let requisitos of proyecto.requisitoslistProyectos" > {{requisitos.descripcion}}</p>
+            </mat-expansion-panel>
+            <br>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Docentes de Apoyo
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p *ngFor="let docentes of proyecto.docenteApoyoResponse" > {{docentes.cedula}} || {{docentes.nombres}}</p>
+            </mat-expansion-panel>
+          </mat-expansion-panel>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>NO EXISTEN PROYECTOS ACTUALMENTE BENEFICARIAS REGISTRADAS</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

@@ -1,0 +1,50 @@
+<div *ngIf="issloading==false">
+  <mat-card>
+    <mat-card-title>ENTIDADES BENEFICARIAS REGISTRADAS</mat-card-title>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>BUSCAR PROYECTO</mat-label>
+      <input matInput   placeholder="FILTRAR" [formControl]="myControl">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </mat-card>
+  <br>
+  <div *ngIf="isexist">
+    <div *ngFor="let anexo4 of anexo4">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-subtitle>Proyecto: {{anexo4.nombreProyecto}}</mat-card-subtitle>
+          <mat-card-title>Cédula: {{anexo4.cedulaEstudiante}}</mat-card-title>
+          <mat-card-title>Estudiante: {{anexo4.nombreEstudiante}}</mat-card-title>
+          <span class="example-spacer"></span>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="convertFile(anexo4.documento)">
+              <mat-icon color="primary">download</mat-icon>
+              <span>Descargar documento</span>
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Carrera: {{anexo4.nombreDirector}}</p>
+          <p>Fecha de Inico y Fin: {{anexo4.nombreRepresentante}}</p>
+          <p>Director: {{anexo4.nombreResponsable}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>NO EXISTEN PROYECTOS ACTUALMENTE BENEFICARIAS REGISTRADAS</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>
+

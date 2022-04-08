@@ -1,0 +1,99 @@
+<div *ngIf="issloading==false">
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [completed]="isexist">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Información de Cargo</ng-template>
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>CORDINADOR DE VINCULACIÓN</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <br>
+          <mat-card-content>
+            <h2 title> El Cordinador de Vinculacón es el encargado de:
+              <h3 display-3>Crear entidad Beneficiaria</h3>
+              <h3 display-3> Firmar Plan de Aprendizajel</h3>
+              <h3 display-3>Firmar Informe Final</h3>
+            </h2>
+            <mat-divider></mat-divider>
+            <br>
+            <div>
+              <button mat-button matStepperNext *ngIf="isexist else isexiste" color="primary">Siguente</button>
+              <ng-template #isexiste>
+                <button mat-button  color="warn" [routerLink]="['/panelusuario/proyectovinculacion/vercordinadorvinculacion']" routerLinkActive="active">Ya existe un cordinador de Vinculación. Ver Más.</button>
+              </ng-template>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Seleccionar nuevo encargado">
+      <form [formGroup]="secondFormGroup">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>CORDINADOR DE VINCULACIÓN</mat-card-title>
+          </mat-card-header>
+          <mat-form-field appearance="outline">
+            <mat-label>BUSCAR DOCENTE</mat-label>
+            <input matInput  placeholder="FILTRAR" [formControl]="myControl">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+              <mat-selection-list #shoes [multiple]="false" (selectionChange)="selectionCordinador($event)" formControlName="secondCtrl" required>
+                <mat-list-option *ngFor="let shoe of filteredOptions | async" [value]="shoe" class="example-item">
+                  {{shoe.cedula}}---{{shoe.nombres}} {{shoe.apellidos}}---{{shoe.carga}}
+                </mat-list-option>
+              </mat-selection-list>
+            </cdk-virtual-scroll-viewport>
+            <br>
+            <p>
+              Docente seleccionado: {{cordinadorselect.nombres}} {{cordinadorselect.apellidos}}
+            </p>
+            <mat-divider></mat-divider>
+            <br>
+            <div>
+              <button mat-button matStepperPrevious color="warn">Atras</button>
+              <button mat-button matStepperNext color="primary">Siguente</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Confirmar</ng-template>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>CORDINADOR DE VINCULACIÓN</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-card-content>
+          <h2 title> El Cordinador de Vinculacón es el encargado de: <h3 display-3>Crear entidad Beneficiaria,
+            Firmar Plan de Aprendizaje y Firmar Informe Final</h3></h2>
+          <mat-divider></mat-divider>
+          <h2>INFORMACIÓN:</h2>
+          <h3>Cédula: {{cordinadorselect.cedula}}</h3>
+          <h3>Nombres: {{cordinadorselect.nombres}}</h3>
+          <h3>Apellidos: {{cordinadorselect.apellidos}}</h3>
+          <h3>Titulo: {{cordinadorselect.titulo}} </h3>
+          <h3>Carga: {{cordinadorselect.carga}}</h3>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <br>
+        <div>
+          <button mat-button matStepperPrevious color="accent">Atras</button>
+          <button mat-flat-button (click)="guardarcv(cordinadorselect)">Finalizar</button>
+        </div>
+      </mat-card>
+    </mat-step>
+  </mat-stepper>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

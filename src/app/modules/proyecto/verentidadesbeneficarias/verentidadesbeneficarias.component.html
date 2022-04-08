@@ -1,0 +1,68 @@
+<div *ngIf="issloading==false">
+  <mat-card>
+    <mat-card-title>ENTIDADES BENEFICARIAS REGISTRADAS</mat-card-title>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>BUSCAR ENTIDAD BENEFICIARIA</mat-label>
+      <input matInput  placeholder="FILTRAR" [formControl]="myControl">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </mat-card>
+  <br>
+  <div *ngIf="isexist">
+    <div *ngFor="let entidad of filteredOptions | async">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-subtitle>{{entidad.nombre}}</mat-card-subtitle>
+          <mat-card-title>{{entidad.representante}}</mat-card-title>
+          <span class="example-spacer"></span>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/panelusuario/proyectovinculacion/editarentidadveneficiaria',entidad.idEntidad]">
+              <mat-icon color="primary">edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="eliminarEntidad(entidad)">
+              <mat-icon color="warn">delete_forever</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Fecha: {{entidad.fechaCreacion | date:"longDate"}}</p>
+          <p>Correo: {{entidad.emailEntidad}}</p>
+          <p>Télefono: {{entidad.telefonoEntidad}}</p>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Más Información
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <strong>Resposable:</strong>
+            <p>Nombre: {{entidad.representante}}</p>
+            <p>Cédula: {{entidad.celularRepresentante}}</p>
+            <p>Correo: {{entidad.emailRepresentante}}</p>
+            <strong>Adminitrador:</strong>
+            <p>Nombre: {{entidad.nombreAdministrador}}</p>
+            <p>Cédula: {{entidad.celularRepresentante}}</p>
+            <p>Correo: {{entidad.correoAdministrador}}</p>
+          </mat-expansion-panel>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>NO EXISTEN ENTIDADES BENEFICARIAS REGISTRADAS</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

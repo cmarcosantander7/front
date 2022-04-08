@@ -1,0 +1,157 @@
+<div *ngIf="issloading==false">
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>PROYECTO</ng-template>
+        <mat-card class="example-card">
+
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>
+              (ANEXO 8)<br>
+              INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY
+            </mat-card-title>
+            <mat-card-subtitle>
+
+              <br />
+              CORDINACIÓN DE VINCULACIÓN CON LA SOCIEDAD<br>
+              REGISTRO DIARIO DE ACTIVIDADES DE LOS ESTUDIANTES
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <br>
+            <mat-label>SELECCIONE UN PROYECTO:</mat-label>
+            <select class="selectAltura" class="form-control"  (change)="selectOpcion($event)" style="width: 100%" name="select" required formControlName="proyecto">
+              <option value="SL">Seleccione</option>
+              <option *ngFor="let item of anexo3"[value]="item.idProyectoPPP">{{item.nombreproyecto}}</option>
+            </select>
+
+             <div>
+               <br>
+               <strong >Datos Informativos:</strong>
+               <br>
+               <strong>Entidad beneficiaria: </strong> {{edntidad.nombre}}
+               <br>
+               <strong>Nombre del Estudiante:  </strong> {{nombre}}
+               <br>
+               <strong>Nro. de Cédula:  </strong> {{cedula}}
+             </div>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <br>
+          <div style="text-align: end">
+            <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+            <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+          </div>
+        </mat-card>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="ACTIVIDADES DEL ESTUDIANTE">
+      <form [formGroup]="secondFormGroup">
+        <mat-card class="example-card">
+
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>
+              (ANEXO 8)<br>
+              INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY
+            </mat-card-title>
+            <mat-card-subtitle>
+              <br />
+              CORDINACIÓN DE VINCULACIÓN CON LA SOCIEDAD<br>
+              REGISTRO DIARIO DE ACTIVIDADES DE LOS ESTUDIANTES
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-grid-list cols="4" rowHeight="3:1.10" [formGroup]="secondFormGroup">
+          <h3>ACTIVIDADES DEL ESTUDIANTE</h3>
+          <mat-grid-tile colspan="4" >
+          <button mat-fab color="primary" (click)="onAddRow()" *ngIf="secondFormGroup.get('rows')"><mat-icon>add_circle</mat-icon></button>
+          </mat-grid-tile>
+
+           <mat-grid-tile colspan="4" *ngFor="let row of secondFormGroup.get('rows')?.controls;let index = index;">
+             <mat-form-field class="example-full-widthf" appearance="outline">
+               <mat-label>Fecha:{{index}}</mat-label>
+               <input matInput type="date"   [formControl]="row.get('fecha')"  placeholder="Fecha:" [required]>
+             </mat-form-field>
+
+             <mat-form-field class="example-full-width" appearance="outline">
+               <mat-label>Descripción de Actividades:{{index}}</mat-label>
+               <textarea matInput [formControl]="row.get('descripcionActividad')"  placeholder="Descripción de Actividades:" [required]>
+               </textarea>
+             </mat-form-field>
+             <mat-form-field class="example-full-widthl" appearance="outline">
+               <mat-label>Lugar{{index}}</mat-label>
+               <input matInput type="text"   [formControl]="row.get('lugar')"  placeholder="Lugar" [required]>
+             </mat-form-field>
+
+             <mat-form-field class="example-full-width2"  appearance="outline">
+               <mat-label>Numero de Horas{{index}}</mat-label>
+               <input matInput type="number" style="font-size: 18px;" class="form-control" (keyup)="sumar()"  class="impnumber"  [formControl]="row.get('numHoras')"  placeholder="Horas" [required]>
+             </mat-form-field>
+
+             <span class="example-spacer"></span>
+             <button mat-mini-fab color="warn" style="margin-left: 50px" (click)="onRemoveRow(index)" (click)="eliminarActividad(row.value)" [disabled]=""><mat-icon>delete_sweep</mat-icon></button>
+           </mat-grid-tile>
+</mat-grid-list>
+
+  <strong>TOTAL DE HORAS:</strong> <strong class="texto2"> {{sum}}</strong><br>
+          </mat-card-content>
+
+
+          <mat-divider></mat-divider>
+          <br>
+          <div style="text-align: end">
+            <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+            <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+          </div>
+        </mat-card>
+      </form>
+    </mat-step>
+
+
+    <mat-step [stepControl]="fourFormGroup" label="Documento">
+      <form [formGroup]="fourFormGroup">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>Anexo 8</mat-card-title>
+            <mat-card-subtitle>Generar Anexo 8</mat-card-subtitle>
+          </mat-card-header>
+          <h4>Debe obtner el anexo 8 y subir de en formato PDF</h4>
+          <div>
+
+              <button style="align-self: center;" mat-raised-button color="primary" *ngIf="actualzar else actualizardatos" (click)="actulizar()">Actualizar Nuevos Datos</button>
+              <!--            -->
+              <!--                <button  style="align-self: center;" class="btn btn-info" *ngIf="actualzar else actualizardatos" (click)="actulizar()">Actualizar Nuevos Datos</button>-->
+              <ng-template #actualizardatos>
+                <button  style="align-self: center;" class="btn btn-info"  (click)="guardar()">GUARDAR REGISTRO</button>
+              </ng-template>
+
+          </div>
+          <mat-card-content>
+            <div>
+              <button mat-button matStepperPrevious color="primary">Atras</button>
+              <button mat-button matStepperNext color="warn">Siguente</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-step>
+
+  </mat-stepper>
+</div>
+<div *ngIf="isexist==false">
+  <mat-card>
+    <mat-card-title>NO EXISTE</mat-card-title>
+  </mat-card>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

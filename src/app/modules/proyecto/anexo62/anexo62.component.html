@@ -1,0 +1,182 @@
+<div *ngIf="issloading==false">
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>PLAN DE APRENDIZAJE (FINAL)</ng-template>
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>  (ANEXO 6.2)<br><br> SEGUIMIENTO, CONTROL Y EVALUACIÓN (FINAL) DEL PLAN DE APRENDIZAJE</mat-card-title>
+            <mat-card-subtitle><br />
+              PROYECTOS DE VINCULACIÓN CON LA SOCIEDAD <br />
+              INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY <br />
+            </mat-card-subtitle>
+          </mat-card-header>
+
+
+          <mat-card-content>
+            <div id ="contenedor">
+              <div id ="cabecera">
+                <mat-form-field appearance="outline" style="width: 90%">
+                  <mat-label>BUSCAR...</mat-label>
+                  <input matInput  placeholder="FILTRAR" [formControl]="myControl">
+                  <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <cdk-virtual-scroll-viewport appendOnly itemSize="40" class="example-viewport1">
+                  <mat-selection-list #shoes [multiple]="false" (selectionChange)="selectionAnexo6($event)" formControlName="anexo6">
+                    <mat-list-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      Proyecto: {{option.nombreProyecto}} :  Estudiante: {{option.cedulaEstudiante}} : {{option.nombreEstudiante}}
+                    </mat-list-option>
+                  </mat-selection-list>
+                </cdk-virtual-scroll-viewport>
+                <br>
+                <p style="font-size: medium">
+                  Estudiante Seleccionado: {{anexo6select.cedulaEstudiante}} : {{anexo6select.nombreEstudiante}}
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <br>
+          <div style="text-align: end">
+            <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+            <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+          </div>
+        </mat-card>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="SEGUIMIENTO, CONTROL Y EVALUACIÓN (PARCIAL)">
+      <form [formGroup]="secondFormGroup">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>  (ANEXO 6.2)<br><br> SEGUIMIENTO, CONTROL Y EVALUACIÓN (FINAL) DEL PLAN DE APRENDIZAJE</mat-card-title>
+            <mat-card-subtitle><br />
+              PROYECTOS DE VINCULACIÓN CON LA SOCIEDAD <br />
+              INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY <br />
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+
+            <mat-grid-list cols="3" rowHeight="6:1.10" [formGroup]="secondFormGroup">
+              <div style="margin-top: 15px">
+                <h3>ACTIVIDADES DEL ESTUDIANTE</h3>
+                <mat-grid-tile colspan="3" >
+                  <button mat-fab color="primary" (click)="onAddRow('')" *ngIf="secondFormGroup.get('rows')"><mat-icon>add_circle</mat-icon></button>
+                </mat-grid-tile>
+                <br>
+                <br>
+                <mat-grid-tile colspan="3" *ngFor="let row of secondFormGroup.get('rows')?.controls;let index = index;">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Actividad</mat-label>
+
+                    <mat-select [formControl]="row.get('actividadesEstudiante')">
+                      <mat-option *ngFor="let activida of anexo6select.actividades" [value]="activida.actividad">{{activida.actividad}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Avance de la Actividad (%){{index}}</mat-label>
+                    <input matInput type="number"  min="0" max="100" [formControl]="row.get('controlEstudiante')"  placeholder="Avance de la Actividad (%)" [required]>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-select [formControl]="row.get('desempenoEstudiante')" placeholder="Desempeño del estudiante">
+                      <mat-option [value]="'POCO SATISFACTORIO'">POCO SATISFACTORIO</mat-option>
+                      <mat-option [value]="'SATISFACTORIO'">SATISFACTORIO</mat-option>
+                      <mat-option [value]="'MUY SATISFACTORIO'">MUY SATISFACTORIO</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-select   [formControl]="row.get('asignaturasBase')" placeholder="Las asignaturas base permitieron lograr el resultado de la actividad">
+                      <mat-option [value]="'SI'">SI</mat-option>
+                      <mat-option [value]="'NO'">NO</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+
+                  <span class="example-spacer"></span>
+                  <button mat-mini-fab color="warn" style="margin-left: 50px" (click)="onRemoveRow(index)" [disabled]=""><mat-icon>delete_sweep</mat-icon></button>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="3">
+
+                </mat-grid-tile>
+              </div>
+            </mat-grid-list>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <br>
+          <div style="text-align: end">
+            <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+            <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+          </div>
+        </mat-card>
+      </form>
+    </mat-step>
+
+
+    <mat-step [stepControl]="fourFormGroup" label="Documento">
+      <form [formGroup]="fourFormGroup">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>  (ANEXO 6.2)<br><br> SEGUIMIENTO, CONTROL Y EVALUACIÓN (FINAL) DEL PLAN DE APRENDIZAJE</mat-card-title>
+            <mat-card-subtitle><br />
+              PROYECTOS DE VINCULACIÓN CON LA SOCIEDAD <br />
+              INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY <br />
+            </mat-card-subtitle>
+          </mat-card-header>
+          <h4>Debe obtner el anexo en "Obtener Anexo" y posteriormente debera firmar y subir de en formato PDF</h4>
+          <div>
+            <button mat-raised-button color="primary" (click)="generarDocumento6111()">Obtener Anexo</button>
+            <mat-form-field appearance="outline" style="width: 75%; margin-left: 10px" >
+              <ngx-mat-file-input accept="application/pdf"  (change)="subirDocumento6111($event.target.files)"  formControlName="docx" placeholder="Subir Documento"></ngx-mat-file-input>
+              <mat-icon matSuffix>folder</mat-icon>
+            </mat-form-field>
+          </div>
+          <mat-card-content>
+            <div>
+              <button mat-button matStepperPrevious color="primary">Atras</button>
+              <button mat-button matStepperNext color="warn">Siguente</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-step>
+    <mat-step  label="Confirmar">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>  (ANEXO 6.2)<br><br> SEGUIMIENTO, CONTROL Y EVALUACIÓN (FINAL) DEL PLAN DE APRENDIZAJE</mat-card-title>
+          <mat-card-subtitle><br />
+            PROYECTOS DE VINCULACIÓN CON LA SOCIEDAD <br />
+            INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY <br />
+          </mat-card-subtitle>
+          <mat-card-subtitle>Guardar Seguimiento </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div>
+            <button mat-button matStepperPrevious color="primary">Atras</button>
+            <button mat-flat-button color="warn" (click)="guardaranexo611()">GUARDAR</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-step>
+  </mat-stepper>
+</div>
+<div *ngIf="isexist==false">
+  <mat-card>
+    <mat-card-title>NO EXISTE</mat-card-title>
+  </mat-card>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

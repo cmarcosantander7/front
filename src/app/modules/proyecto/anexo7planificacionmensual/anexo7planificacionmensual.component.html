@@ -1,0 +1,384 @@
+<div *ngIf="issloading==false">
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>PLAN DE APRENDIZAJE</ng-template>
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>ENTIDAD BENEFICIARIA</mat-card-title>
+            <mat-card-subtitle>Creación de la entidad beneficiaria</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              COORDINACIÓN DE VINCULACION CON LA SOCIEDAD
+            </p>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-card-subtitle>INFORMACION DEL ANEXO 7</mat-card-subtitle>
+            <mat-card-subtitle>Nombre:{{proyecto.nombre}}</mat-card-subtitle>
+            <mat-card-subtitle>Director Proyecto: {{proyecto.nombredirector}}</mat-card-subtitle>
+            <mat-card-subtitle>Empresa/Institucion: {{anexo2.entidadBeneficiaria}}</mat-card-subtitle>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Fecha Planificacion</mat-label>
+              <input type="date" matInput formControlName="fechaPlanificacion" placeholder="Fecha" required [(ngModel)]="anexoss7.fechaPlanificacion">
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Mes</mat-label>
+              <input type="month" matInput formControlName="mesAnioPlanificado" placeholder="Mes" required [(ngModel)]="anexoss7.mesAnioPlanificado">
+            </mat-form-field>
+
+          </mat-card-content>
+          <div>
+            <button mat-button matStepperNext color="primary">Siguiente</button>
+          </div>
+        </mat-card>
+      </form>
+    </mat-step>
+
+
+
+
+    <mat-step [stepControl]="secondFormGroup" label="Actividades de Docentes">
+      <form [formGroup]="secondFormGroup">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>PLANIFICACIÓN DE LAS HORAS DOCENTES</mat-card-title></mat-card-header>
+          <mat-card-content>
+            <mat-grid-list cols="3" rowHeight="6:1.10" [formGroup]="secondFormGroup">
+              <div style="margin-top: 15px">
+                <h3>PLANIFICACIÓN DE LAS HORAS DOCENTES</h3>
+                <mat-grid-tile colspan="3">
+                  <button mat-fab color="primary" (click)="onAddRow('horasDocentes')" *ngIf="secondFormGroup.get('rows')"><mat-icon>add_circle</mat-icon></button>
+
+                </mat-grid-tile>
+                <br>
+                <br>
+                <div>
+                  <mat-grid-tile colspan="3" *ngFor="let row of secondFormGroup.get('rows')?.controls;let index = index;">
+
+
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>Resultados</mat-label>
+                      <input matInput type="text" [formControl]="row.get('resultados')"  placeholder="Avance de la Actividad (%)" [required]>
+                    </mat-form-field>
+<!--Carga de lista de actividades-->
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>Resultados</mat-label>
+                      <input matInput type="text" [formControl]="row.get('actividad')"  placeholder="Avance de la Actividad (%)" [required]>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>Resultados</mat-label>
+                      <input matInput type="text" [formControl]="row.get('nombreDocenteApoyo')"  placeholder="Avance de la Actividad (%)" [required]>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>Resultados</mat-label>
+                      <input matInput type="text" [formControl]="row.get('cedulaDocente')"  placeholder="Avance de la Actividad (%)" [required]>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>No. Horas</mat-label>
+                      <input matInput type="number"  min="0" max="24" [formControl]="row.get('numHoras')"  placeholder="Número de horas" [required]>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>Fecha inicio</mat-label>
+                      <input matInput type="date"[formControl]="row.get('fechaInicio')"  placeholder="Fecha de Inicio de Actividad" [required]>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>Fecha final</mat-label>
+                      <input matInput type="date" [formControl]="row.get('fechaFin')"  placeholder="Fecha final de Actividad" [required]>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 180px" appearance="outline">
+                      <mat-label>Observaciones</mat-label>
+                      <input matInput type="text" [formControl]="row.get('observaciones')"  placeholder="Observaciones" [required]>
+                    </mat-form-field>
+
+
+
+                    <span class="example-spacer"></span>
+                    <button mat-mini-fab color="warn" style="margin-left: 50px" (click)="onRemoveRow(index)" [disabled]=""><mat-icon>delete_sweep</mat-icon></button>
+
+                  </mat-grid-tile>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  //////////////////
+
+<!--                  <table>-->
+<!--                    <tr>-->
+<!--                      <td colspan="5" scope="col"> <button class="btn btn-success" (click)="onAddRow()" *ngIf="addForm.get('rows')">AGREGAR ACTIVIDADES</button></td>-->
+<!--                    </tr>-->
+<!--                    <tbody>-->
+<!--                    <tr *ngFor="let row of addForm.get('rows')?.controls;let index = index;">-->
+<!--                      <td colspan="" scope="col "> <strong>Resultados</strong>-->
+<!--                        <div class="form-group">-->
+<!--                          <input type="text" class="form-control"  [formControl]="row.get('resultados')">-->
+<!--                        </div>-->
+<!--                      </td>-->
+<!--                      <td colspan="" scope="col" style="width: 350px;">  <strong><center>Actividad de los docentes participantes</center></strong>-->
+<!--                        <select class="form-control" [formControl]="row.get('actividad')">-->
+<!--                          <option value="SL" >SELECCIONE</option>-->
+<!--                          <option  *ngFor="let item of proyecto.actividadeslistProyectos" [ngvalue]="item.descripcion">{{item.descripcion}}</option>-->
+<!--                        </select>-->
+<!--                      </td>-->
+<!--                      <td colspan="" scope="col"> <strong><center>Docente de apoyo</center></strong>-->
+<!--                        <div class="form-group">-->
+
+<!--                          <select class="form-control"  [formControl]="row.get('cedulaDocente')">-->
+<!--                            <option value="SL">SELECCIONE</option>-->
+<!--                            <option  *ngFor="let item of anexo1" [ngvalue]="item.cedulaDelegado-item.nombreDelegado">{{item.cedulaDelegado}}-{{item.nombreDelegado}}</option>-->
+<!--                          </select>-->
+<!--                        </div>-->
+<!--                      <td colspan="" scope="col ">-->
+<!--                    <tr>-->
+<!--                      <strong><center>Fecha Inicio</center></strong>-->
+<!--                      <div class="form-group">-->
+<!--                        <input type="date" id="start" name="trip-start" [formControl]="row.get('fechaInicio')" >-->
+
+<!--                      </div>-->
+<!--                      <div class="form-group">-->
+<!--                        <strong><center>Fecha Finalización</center></strong>-->
+
+<!--                        <input type="date" id="start" name="trip-start" [formControl]="row.get('fechaFin')" >-->
+
+<!--                      </div>-->
+<!--                    </tr>-->
+<!--                    </td>-->
+<!--                    <td colspan="" scope="col ">-->
+<!--                      <tr>-->
+<!--                        <strong><center>Observaciones</center></strong>-->
+<!--                        <div class="form-group">-->
+
+<!--                          <input type="text" class="form-control"  [formControl]="row.get('observaciones')">-->
+
+<!--                        </div>-->
+<!--                        <strong><center>No. de Horas</center></strong>-->
+<!--                        <div class="form-group">-->
+<!--                          <input type="number" class="form-control" [formControl]="row.get('numHoras')">-->
+<!--                        </div>-->
+<!--                      </tr>-->
+<!--                    </td>-->
+<!--                    <td> <button mat-raised-button color="warn" (click)="onRemoveRow(index)">ELIMINAR</button> </td>-->
+<!--                    </tbody>-->
+<!--                  </table>-->
+
+
+
+
+<!--                  <table mat-table [formGroup]="secondFormGroup" class="mat-elevation-z8 demo-table">-->
+<!--                    &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--                    <ng-container matColumnDef="demo-position">-->
+<!--                      <th mat-header-cell *matHeaderCellDef> No. </th>-->
+<!--                      <td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
+<!--                    </ng-container>-->
+
+<!--                    &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--                    <ng-container matColumnDef="demo-name">-->
+<!--                      <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--                    </ng-container>-->
+
+<!--                    &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--                    <ng-container matColumnDef="demo-weight">-->
+<!--                      <th mat-header-cell *matHeaderCellDef> Weight </th>-->
+<!--                      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+<!--                    </ng-container>-->
+
+<!--                    &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--                    <ng-container matColumnDef="demo-symbol">-->
+<!--                      <th mat-header-cell *matHeaderCellDef> Symbol </th>-->
+<!--                      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+<!--                    </ng-container>-->
+
+<!--                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--                  </table>-->
+
+
+
+                  ///////
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+              </div>
+            </mat-grid-list>
+
+
+          </mat-card-content>
+          <div>
+            <button mat-button matStepperPrevious color="warn">Atras</button>
+            <button mat-button matStepperNext color="primary">Siguiente</button>
+          </div>
+
+        </mat-card>
+      </form>
+    </mat-step>
+
+
+
+
+
+<!--    <mat-step [stepControl]="thirdFormGroup" label="Actividades Estudiantes">-->
+<!--      <form [formGroup]="thirdFormGroup">-->
+<!--        <mat-card class="example-card">-->
+<!--          <mat-card-header>-->
+<!--            <div mat-card-avatar class="example-header-image"></div>-->
+<!--            <mat-card-title>PLANIFICACIÓN DE LAS HORAS ESTUDIANTES</mat-card-title></mat-card-header>-->
+<!--          <mat-card-content>-->
+<!--            <mat-grid-list cols="3" rowHeight="6:1.10" [formGroup]="thirdFormGroup">-->
+<!--              <div style="margin-top: 15px">-->
+<!--                <h3>ACTIVIDADES DEL ESTUDIANTE</h3>-->
+<!--                <mat-grid-tile colspan="3" >-->
+<!--                  <button mat-fab color="primary" (click)="onAddRow1('horasestudiantes')" *ngIf="thirdFormGroup.get('rows1')"><mat-icon>add_circle</mat-icon></button>-->
+<!--                </mat-grid-tile>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <mat-grid-tile colspan="3" *ngFor="let row1 of thirdFormGroup.get('rows1')?.controls;let index = index;">-->
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>Resultados</mat-label>-->
+<!--                    <input matInput type="text" [formControl]="row1.get('resultados')"  placeholder="Avance de la Actividad (%)" [required]>-->
+<!--                  </mat-form-field>-->
+
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>Actividad del estudiante</mat-label>-->
+<!--                    <input matInput type="text"  min="0" max="100" [formControl]="row1.get('actividad')"  placeholder="Actividad realizada" [required]>-->
+<!--                  </mat-form-field>-->
+
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>Nombre del estudiante</mat-label>-->
+<!--                    <input matInput type="text" [formControl]="row1.get('nombreEstudiante')"  placeholder="Nombre del Docente" [required]>-->
+<!--                  </mat-form-field>-->
+
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>Cédula Estudiante</mat-label>-->
+<!--                    <input matInput type="text" [formControl]="row1.get('cedulaEstudiante')"  placeholder="Cédula" [required]>-->
+<!--                  </mat-form-field>-->
+
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>No. Horas</mat-label>-->
+<!--                    <input matInput type="number"  min="0" max="24" [formControl]="row1.get('numHoras')"  placeholder="Número de horas" [required]>-->
+<!--                  </mat-form-field>-->
+
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>Fecha inicio</mat-label>-->
+<!--                    <input matInput type="date"[formControl]="row1.get('fechaInicio')"  placeholder="Fecha de Inicio de Actividad" [required]>-->
+<!--                  </mat-form-field>-->
+
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>Fecha final</mat-label>-->
+<!--                    <input matInput type="date" [formControl]="row1.get('fechaFin')"  placeholder="Fecha final de Actividad" [required]>-->
+<!--                  </mat-form-field>-->
+
+<!--                  <mat-form-field style="width: 180px" appearance="outline">-->
+<!--                    <mat-label>Observaciones</mat-label>-->
+<!--                    <input matInput type="text" [formControl]="row1.get('observaciones')"  placeholder="Observaciones" [required]>-->
+<!--                  </mat-form-field>-->
+
+
+
+
+<!--                  <span class="example-spacer"></span>-->
+<!--                  <button mat-mini-fab color="warn" style="margin-left: 50px" (click)="onRemoveRow1(index)" [disabled]=""><mat-icon>delete_sweep</mat-icon></button>-->
+
+<!--                </mat-grid-tile>-->
+<!--                <mat-grid-tile colspan="3">-->
+<!--                  &lt;!&ndash;                <div>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                  <button type="submit" mat-raised-button color="primary" (click)="agregarActividades()" >GUARDAR</button>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                  <button mat-raised-button color="warn"  style="margin-left: 5px" [routerLink]="['/panelusuario/proyectovinculacion/bienvenida']" >CANCELAR</button>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                </mat-grid-tile>-->
+<!--              </div>-->
+<!--            </mat-grid-list>-->
+
+<!--          </mat-card-content>-->
+<!--          <div>-->
+<!--            <button mat-button matStepperPrevious color="warn">Atras</button>-->
+<!--            <button mat-button matStepperNext color="primary">Siguiente</button>-->
+<!--          </div>-->
+
+<!--        </mat-card>-->
+<!--      </form>-->
+<!--    </mat-step>-->
+
+
+
+
+
+
+
+<!--    <mat-step [stepControl]="fourFormGroup" label="Documento">-->
+<!--      <form [formGroup]="fourFormGroup">-->
+<!--        <mat-card class="example-card">-->
+<!--          <mat-card-header>-->
+<!--            <div mat-card-avatar class="example-header-image"></div>-->
+<!--            <mat-card-title>ENTIDAD BENEFICIARIA</mat-card-title>-->
+<!--            <mat-card-subtitle>Creación de la entidad beneficiaria</mat-card-subtitle>-->
+<!--          </mat-card-header>-->
+<!--          <mat-card-content>-->
+<!--            <p>-->
+<!--              COORDINACIÓN DE VINCULACION CON LA SOCIEDAD-->
+<!--            </p>-->
+<!--            <mat-divider></mat-divider>-->
+<!--            <br>-->
+<!--            <h3>INFORMACION DEL ANEXO 7</h3>-->
+<!--            <h4>Nombre: {{anexo7select.nombreProyecto}}</h4>-->
+<!--            <h4>Mes/Año Planificado: {{anexo7select.horasDocentes}}</h4>-->
+<!--            <h4>Director Proyecto: {{anexo7select.nombreDirectorProyecto}}</h4>-->
+<!--            <h4>Teléfono: {{anexo7select.nombreProyecto}}</h4>-->
+<!--            <h4>Nombre Entidad beneficiaria: {{anexo7select.horasDocentes}}</h4>-->
+<!--          </mat-card-content>-->
+<!--          <div>-->
+<!--            <button mat-button matStepperPrevious color="warn">Atras</button>-->
+<!--            <button mat-raised-button color="primary">Guardar</button>-->
+<!--          </div>-->
+
+<!--        </mat-card>-->
+<!--      </form>-->
+<!--    </mat-step>-->
+  </mat-stepper>
+</div>
+<!--<div *ngIf="isexist==false">-->
+<!--  <mat-card>-->
+<!--    <mat-card-title>NO EXISTE</mat-card-title>-->
+<!--  </mat-card>-->
+<!--</div>-->
+<!--<ng-container *ngIf="issloading">-->
+<!--  <div class="bss-loader" style="margin: auto;">-->
+<!--    <center>-->
+<!--      <mat-progress-bar mode="indeterminate"></mat-progress-bar>-->
+<!--    </center>-->
+<!--  </div>-->
+<!--</ng-container>-->

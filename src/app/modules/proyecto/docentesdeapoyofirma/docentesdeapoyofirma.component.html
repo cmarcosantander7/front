@@ -1,0 +1,42 @@
+<div *ngIf="issloading==false">
+  <mat-card>
+    <mat-card-title>FIRMA DE ANEXO 1</mat-card-title>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>BUSCAR PROYECTO</mat-label>
+      <input matInput   placeholder="FILTRAR" [formControl]="myControl">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </mat-card>
+  <br>
+  <div  *ngIf="isexist">
+    <div *ngFor="let anexo1 of filteredOptions | async">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-subtitle>Resposanble: {{anexo1.nombreCarrera}}</mat-card-subtitle>
+          <mat-card-title>{{anexo1.nombreProyecto}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Cédula del Cordinador: {{anexo1.cedulaCoordinador}}</p>
+          <p>Nombre del Cordinador: {{anexo1.nombreCoordinador}}<p>
+          <p>Fecha de delegacón: {{anexo1.fechaDelegacion | date:"longDate"}}</p>
+          <mat-divider></mat-divider>
+          <br>
+          <button mat-raised-button color="primary" (click)="convertFile(anexo1.documento)">DESCARGAR DOCUMENTO</button>
+          <button mat-raised-button color="accent" style="margin-left: 5px" (click)="update(anexo1)">SUBIR DOCUMENTO</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>No tiene anexos</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

@@ -1,0 +1,131 @@
+<div *ngIf="issloading==false">
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [completed]="isexist">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Información de Cargo</ng-template>
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>CORDINADOR DE VINCULACIÓN</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <br>
+          <mat-card-content>
+            <h2 title> El Cordinador de Vinculacón es el encargado de:
+              <h3 display-3>Crear entidad Beneficiaria</h3>
+              <h3 display-3> Firmar Plan de Aprendizajel</h3>
+              <h3 display-3>Firmar Informe Final</h3>
+            </h2>
+            <mat-divider></mat-divider>
+            <br>
+            <div>
+              <button mat-button matStepperNext *ngIf="isexist else isexiste" color="primary">Siguente</button>
+              <ng-template #isexiste>
+                <button mat-button  color="warn" [routerLink]="['/panelusuario/proyectovinculacion/verresponsable',cedula]"routerLinkActive="active">Ya existe un resposable para esta carrera. Ver Más.</button>
+              </ng-template>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Seleccionar nuevo encargado">
+      <form [formGroup]="secondFormGroup">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>CORDINADOR DE VINCULACIÓN</mat-card-title>
+          </mat-card-header>
+          <mat-form-field appearance="outline">
+            <mat-label>BUSCAR DOCENTE</mat-label>
+            <input matInput  placeholder="FILTRAR" [formControl]="myControl">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+              <mat-selection-list #shoes [multiple]="false" (selectionChange)="selectionDocente($event)" formControlName="secondCtrl" required>
+                <mat-list-option *ngFor="let shoe of filteredOptions | async" [value]="shoe" class="example-item">
+                  {{shoe.cedula}}---{{shoe.nombres_completo}}---{{shoe.docente_tipo_tiempo}}
+                </mat-list-option>
+              </mat-selection-list>
+            </cdk-virtual-scroll-viewport>
+            <br>
+            <p>
+              Docente seleccionado: {{docentesselect.nombres_completo}}
+            </p>
+            <mat-form-field appearance="fill" style="width: 100%">
+              <mat-label>PERIDO DE ASIGNACION</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Inicio" [(ngModel)]="docentesselect.fecha_inicio_periodo">
+                <input matEndDate formControlName="end" placeholder="Final" [(ngModel)]="docentesselect.fecha_fin_periodo">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <br>
+            <div>
+              <button mat-button matStepperPrevious color="warn">Atras</button>
+              <button mat-button matStepperNext color="primary">Siguente</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Confirmar</ng-template>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>CORDINADOR DE VINCULACIÓN</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-card-content>
+          <h2 title> El Cordinador de Vinculacón es el encargado de: <h3 display-3>Crear entidad Beneficiaria,
+            Firmar Plan de Aprendizaje y Firmar Informe Final</h3></h2>
+          <mat-divider></mat-divider>
+          <h2>INFORMACIÓN:</h2>
+          <h3>Cédula: {{docentesselect.cedula}}</h3>
+          <h3>Nombres: {{docentesselect.nombres_completo}}</h3>
+          <h3>Titulo: {{docentesselect.titulo}}</h3>
+          <h3>Apellidos: {{docentesselect.docente_tipo_tiempo}} </h3>
+          <h3>Periado: {{docentesselect.fecha_inicio_periodo | date:"longDate"}}--{{docentesselect.fecha_fin_periodo | date:"longDate"}} </h3>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                MATERIAS:
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let meterias of docentesselect.materias">
+              <p>{{meterias.nombre}}</p>
+            </div>
+          </mat-expansion-panel>
+          <br>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                CARRERAS:
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let carreras of docentesselect.carreas">
+              <p>{{carreras.nombrecarrera}}</p>
+            </div>
+          </mat-expansion-panel>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <br>
+        <div>
+          <button mat-button matStepperPrevious color="accent">Atras</button>
+          <button mat-flat-button (click)="guardarResaposableppp(docentesselect)">Finalizar</button>
+        </div>
+      </mat-card>
+    </mat-step>
+  </mat-stepper>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

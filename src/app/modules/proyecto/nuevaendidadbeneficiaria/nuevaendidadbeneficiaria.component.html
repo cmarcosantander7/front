@@ -1,0 +1,136 @@
+<mat-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Datos Entidad Beneficiaria</ng-template>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>ENTIDAD BENEFICIARIA</mat-card-title>
+          <mat-card-subtitle>Creacion de la entidad beneficiaria</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+           CORDINADCION DE VINCULACION CON LA SOCIEDAD
+          </p>
+          <mat-divider></mat-divider>
+          <br>
+          <h3>INFORMACION DE LA ENTIDAD BENEFICIARIA</h3>
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre de la Entidad</mat-label>
+            <input matInput formControlName="nombre" placeholder="Ex. Gad Parroquial" required [(ngModel)]="entidad.nombre">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Ciudad</mat-label>
+            <input matInput formControlName="ciudad" placeholder="Ex. Cuenca" required [(ngModel)]="entidad.ciudad">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="direccion" placeholder="Ex. AV. Americas" required [(ngModel)]="entidad.direccion">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Télefono</mat-label>
+            <input matInput formControlName="telefono" placeholder="Ex. 0984978416"
+                   (keypress)="omit_special_char($event)" (keypress)="omit_max_char($event)" required [(ngModel)]="entidad.telefonoEntidad">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="correo" placeholder="Ex. ejemplo@gmail.com" required [(ngModel)]="entidad.emailEntidad">
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput placeholder="Ex. La entidad es una...." formControlName="descripcion" [(ngModel)]="entidad.descripcionEmpresa" name="descripcionEmpresa"></textarea>
+          </mat-form-field>
+        </mat-card-content>
+        <div>
+          <button mat-button matStepperNext color="primary">Siguiente</button>
+        </div>
+      </mat-card>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" label="Datos de Miembros de Entidad">
+    <form [formGroup]="secondFormGroup">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>ENTIDAD BENEFICIARIA</mat-card-title>
+          <mat-card-subtitle>Creacion de la entidad beneficiaria</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            CORDINADCION DE VINCULACION CON LA SOCIEDAD
+          </p>
+          <mat-divider></mat-divider>
+          <br>
+          <h3>INFORMACION DEL REPRESENTANTE DE LA ENTIDAD BENEFICIARIA</h3>
+          <mat-form-field appearance="fill">
+            <mat-label>Nombres completos</mat-label>
+            <input matInput formControlName="nombre" placeholder="Ex. Marcelo Jose Lopéz Cuenca" required [(ngModel)]="entidad.representante">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Cédula</mat-label>
+            <input matInput formControlName="cedula" placeholder="Ex. 1657849874"
+                   (keypress)="omit_special_char($event)" (keypress)="omit_max_char($event)" required [(ngModel)]="entidad.celularRepresentante">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="correo" placeholder="Ex. ejemplo@gmail.com" required [(ngModel)]="entidad.emailRepresentante">
+          </mat-form-field>
+          <h3>INFORMACION DEL ADMINISTRADOR DE LA ENTIDAD BENEFICIARIA</h3>
+          <mat-form-field appearance="fill">
+            <mat-label>Nombres completos</mat-label>
+            <input matInput formControlName="nombre1" placeholder="Ex. Marcelo Jose Lopéz Cuenca" required [(ngModel)]="entidad.nombreAdministrador">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Cédula</mat-label>
+            <input matInput formControlName="cedula1" placeholder="Ex. 1657849874"
+                   (keypress)="omit_special_char($event)" (keypress)="omit_max_char($event)" required [(ngModel)]="entidad.cedulaAdministrador">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="correo1" placeholder="Ex. ejemplo@gmail.com" required [(ngModel)]="entidad.correoAdministrador">
+          </mat-form-field>
+        </mat-card-content>
+        <div>
+          <button mat-button matStepperPrevious color="warn">Atras</button>
+          <button mat-button matStepperNext color="primary">Siguente</button>
+        </div>
+      </mat-card>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Finalizar</ng-template>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>ENTIDAD BENEFICIARIA</mat-card-title>
+        <mat-card-subtitle>Creacion de la entidad beneficiaria</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          CORDINADCION DE VINCULACION CON LA SOCIEDAD
+        </p>
+        <mat-divider></mat-divider>
+        <br>
+        <h3>INFORMACION DE LA ENTIDAD BENEFICIARIA</h3>
+        <h4>Nombre: {{entidad.nombre}}</h4>
+        <h4>Ciudad: {{entidad.ciudad}}</h4>
+        <h4>Dirección: {{entidad.direccion}}</h4>
+        <h4>Teléfono: {{entidad.telefonoEntidad}}</h4>
+        <h4>Correo: {{entidad.emailEntidad}}</h4>
+        <h4>Descripción: {{entidad.descripcionEmpresa}}</h4>
+        <h3>INFORMACION DEL REPRESENTANTE DE LA ENTIDAD BENEFICIARIA</h3>
+        <h4>Nombre: {{entidad.representante}}</h4>
+        <h4>Cédula: {{entidad.celularRepresentante}}</h4>
+        <h4>Correo: {{entidad.celularRepresentante}}</h4>
+        <h3>INFORMACION DEL ADMINISTRADOR DE LA ENTIDAD BENEFICIARIA</h3>
+        <h4>Nombre: {{entidad.nombreAdministrador}}</h4>
+        <h4>Cédula: {{entidad.cedulaAdministrador}}</h4>
+        <h4>Correo: {{entidad.correoAdministrador}}</h4>
+      </mat-card-content>
+      <div>
+        <button mat-button matStepperPrevious color="warn">Atras</button>
+        <button mat-raised-button color="primary" (click)="crearEntidad(entidad)">Guardar</button>
+      </div>
+    </mat-card>
+  </mat-step>
+</mat-stepper>

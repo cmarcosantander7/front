@@ -1,0 +1,107 @@
+<div *ngIf="issloading==false">
+  <div *ngIf="isexist">
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="EN PROCESO">
+        <br>
+        <div *ngFor="let anexo3 of anexo3enproceso">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>Proyecto: {{anexo3.nombreproyecto}}</mat-card-title>
+              <mat-card-subtitle>Cedula: {{anexo3.cedula}}</mat-card-subtitle>
+              <mat-card-subtitle>Nombre: {{anexo3.nombresestudiante}} {{anexo3.apellidosestudiante}}</mat-card-subtitle>
+              <span class="example-spacer"></span>
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="convertFile(anexo3.documento)">
+                  <mat-icon color="warn">download</mat-icon>
+                  <span>Descargar documento</span>
+                </button>
+              </mat-menu>
+            </mat-card-header>
+            <mat-card-content>
+              <p>Carrera: {{anexo3.nombrecarrera}}</p>
+              <p>Fecha de envio: {{anexo3.fecha_solicitud | date:"longDate"}}</p>
+              <p>Ciclo: {{anexo3.ciclo}}</p>
+              <p>Resposable: {{anexo3.nombre_responsable}}</p>
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="ACEPTADAS">
+        <br>
+        <div *ngFor="let anexo3 of anexo3aceptados">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>Proyecto: {{anexo3.nombreproyecto}}</mat-card-title>
+              <mat-card-subtitle>Cedula: {{anexo3.cedula}}</mat-card-subtitle>
+              <mat-card-subtitle>Nombre: {{anexo3.nombresestudiante}} {{anexo3.apellidosestudiante}}</mat-card-subtitle>
+              <span class="example-spacer"></span>
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="convertFile(anexo3.documento)">
+                  <mat-icon color="warn">download</mat-icon>
+                  <span>Descargar documento</span>
+                </button>
+              </mat-menu>
+            </mat-card-header>
+            <mat-card-content>
+              <p>Carrera: {{anexo3.nombrecarrera}}</p>
+              <p>Fecha de envio: {{anexo3.fecha_solicitud | date:"longDate"}}</p>
+              <p>Ciclo: {{anexo3.ciclo}}</p>
+              <p>Resposable: {{anexo3.nombre_responsable}}</p>
+              <p>Razón: {{anexo3.observaciones}}</p>
+              <button mat-flat-button style="width: 100%" color="primary" [routerLink]="['/panelusuario/proyectovinculacion/firmarportulaciones',cedula]">FINALIZAR PROCESOS</button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="DENEGADAS">
+        <br>
+        <div *ngFor="let anexo3 of anexo3denagados">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>Proyecto: {{anexo3.nombreproyecto}}</mat-card-title>
+              <mat-card-subtitle>Cedula: {{anexo3.cedula}}</mat-card-subtitle>
+              <mat-card-subtitle>Nombre: {{anexo3.nombresestudiante}} {{anexo3.apellidosestudiante}}</mat-card-subtitle>
+              <span class="example-spacer"></span>
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="convertFile(anexo3.documento)">
+                  <mat-icon color="warn">download</mat-icon>
+                  <span>Descargar documento</span>
+                </button>
+              </mat-menu>
+            </mat-card-header>
+            <mat-card-content>
+              <p>Carrera: {{anexo3.nombrecarrera}}</p>
+              <p>Fecha de envio: {{anexo3.fecha_solicitud | date:"longDate"}}</p>
+              <p>Ciclo: {{anexo3.ciclo}}</p>
+              <p>Resposable: {{anexo3.nombre_responsable}}</p>
+              <p>Razón: {{anexo3.observaciones}}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>NO EXISTEN CONVOCATORIA</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>
+

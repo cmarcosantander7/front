@@ -1,0 +1,55 @@
+.example-card {
+  width: 360px;
+  float: left;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid  #0c3255;
+  border-inline: 5px solid  #0c3255;
+  writing-mode: horizontal-tb;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-stepper-horizontal {
+  margin-top: 8px;
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
+.example-card2 {
+  max-width: 1500px;
+  margin: 5px auto;
+}
+
+
+.example-header-image {
+  background-image: url('src/assets/images/LogoCiculo.png');
+  background-size: cover;
+}
+.example-viewport {
+  height: 200px;
+  width: 100%;
+}
+
+.example-item {
+  height: 50px;
+}
+#contenedor{
+  overflow: hidden;
+}
+#izquierda{
+  text-align: start;
+  height:50%;
+  float:left;
+  width:50%;
+}
+#derecha{
+  height:50%;
+  float:right;
+  width:50%;
+  text-align: start;
+}
+mat-grid-tile {
+}

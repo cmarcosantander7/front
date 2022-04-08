@@ -1,0 +1,61 @@
+<div *ngIf="issloading==false">
+  <div *ngIf="isexist">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Cordinador de Vinculación</mat-card-title>
+        <mat-card-subtitle>Docente actual con el cargo</mat-card-subtitle>
+        <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="quitarCordinadorVinculacion(docente)">
+            <mat-icon color="warn">delete_forever</mat-icon>
+            <span>Eliminar</span>
+          </button>
+        </mat-menu>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 title> El Cordinador de Vinculacón es el encargado de:
+          <h3 display-3>Crear entidad Beneficiaria</h3>
+          <h3 display-3> Firmar Plan de Aprendizajel</h3>
+          <h3 display-3>Firmar Informe Final</h3>
+        </h2>
+        <mat-divider></mat-divider>
+        <br>
+        <h3>
+          Nombre: {{docente.nombres}}
+        </h3>
+        <h3>
+          Apellidos: {{docente.apellidos}}
+        </h3>
+        <h3>
+          Titulo: {{docente.titulo}}
+        </h3>
+        <h3>
+          Carga: {{docente.carga}}
+        </h3>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Cordinador de Vinculación</mat-card-title>
+        <mat-card-subtitle>Docente actual con el cargo</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p> NO EXISTE NINGUN CORDINADOR DE VINCULACION ACTUAL</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

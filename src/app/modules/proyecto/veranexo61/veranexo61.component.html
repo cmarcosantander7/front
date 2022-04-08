@@ -1,0 +1,67 @@
+<div *ngIf="issloading==false">
+  <mat-card>
+    <mat-card-title>ANEXOS 6.1</mat-card-title>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>BUSCAR..</mat-label>
+      <input matInput   placeholder="FILTRAR" [formControl]="myControl">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </mat-card>
+  <br>
+  <div *ngIf="isexist">
+    <div *ngFor="let anex61 of filteredOptions | async">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-subtitle>Director: {{anex61.nombreDirector}}</mat-card-subtitle>
+          <mat-card-subtitle>Docente de Apoyo: {{anex61.nombreApoyo}}</mat-card-subtitle>
+          <span class="example-spacer"></span>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/panelusuario/proyectovinculacion/editaranexo6_2',anex61.id,cedula,nombre]">
+              <mat-icon color="primary">edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="eliminarAnexo61(anex61)">
+              <mat-icon color="warn">delete_forever</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Fecha de Emision: {{anex61.fechaDirector | date:"longDate"}}</p>
+          <strong>Estudiante: {{anex61.nombreEstudiante}}</strong>
+          <mat-card-subtitle>DNI: {{anex61.cedulaEstudiante}}</mat-card-subtitle>
+          <mat-card-subtitle>Ciclo: {{anex61.ciclo}}</mat-card-subtitle>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Actividades Evaluadas
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngFor="let act of anex61.actividades">
+              Act: {{act.actividadesEstudiante}}  Control:{{act.controlEstudiante}}
+              <br>Desempeño: {{act.desempenoEstudiante}}   Asignaturas base: {{act.asignaturasBase}}</p>
+          </mat-expansion-panel>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>NO EXISTEN </mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>
+
+

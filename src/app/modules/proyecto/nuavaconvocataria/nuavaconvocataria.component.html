@@ -1,0 +1,201 @@
+<div *ngIf="issloading==false">
+  <div *ngIf="isexist">
+    <mat-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Proyecto</ng-template>
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>SELECCIONE EL PROYECTO PARA LA CONVOCATORIA</mat-card-title>
+              <mat-card-subtitle>Proyecto</mat-card-subtitle>
+            </mat-card-header>
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label>BUSCAR PROYECTO</mat-label>
+              <input matInput  placeholder="FILTRAR" [formControl]="myControl">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+                <mat-selection-list #shoes [multiple]="false" (selectionChange)="selectionProyecto($event)" formControlName="firstCtrl" required>
+                  <mat-list-option *ngFor="let shoe of filteredOptions | async" [value]="shoe"  class="example-item">
+                    Nombre: {{shoe.nombre}} ||-- Director: {{shoe.nombredirector}}
+                  </mat-list-option>
+                </mat-selection-list>
+              </cdk-virtual-scroll-viewport>
+              <br>
+              <p>
+                Proyecto seleccionado: {{proyectoselect.nombre}}
+              </p>
+              <mat-divider></mat-divider>
+              <br>
+              <div>
+                <button mat-button matStepperNext color="primary">Siguente</button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Otras datos y Actividades">
+        <form [formGroup]="secondFormGroup">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>SELECCIONE EL PROYECTO PARA LA CONVOCATORIA</mat-card-title>
+              <mat-card-subtitle>Proyecto</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div>
+                <strong>CICLO Y FECHA MAXIMA DE RECEPCION</strong>
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>SELECCIONE EL CICLO</mat-label>
+                  <mat-select formControlName="ciclo" [(ngModel)]="anexo2.ciclo">
+                    <mat-option value="PRIMER">PRIMER</mat-option>
+                    <mat-option value="SEGUNDO">SEGUNDO</mat-option>
+                    <mat-option value="TERCERO">TERCERO</mat-option>
+                    <mat-option value="CUARTO">CUARTO</mat-option>
+                    <mat-option value="QUINTO">QUINTO</mat-option>
+                    <mat-option value="SEXTO">SEXTO</mat-option>
+                    <mat-option value="SEPTIMO">SEPTIMO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div>
+                  <mat-form-field appearance="fill" style="width: 100%">
+                    <mat-label>Correo de docente</mat-label>
+                    <input matInput formControlName="correo" placeholder="Ex. ejemplo@gmail.com" [(ngModel)]="anexo2.emailDocente">
+                  </mat-form-field>
+                </div>
+                <mat-form-field appearance="fill" style="width: 100%;">
+                  <mat-label>Fecha maxima de recepción</mat-label>
+                  <input matInput formControlName="fecharesep" [matDatepicker]="picker" [(ngModel)]="anexo2.fechaMaxRecepcion">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div>
+                <strong>ACTIVIDADES DE LA CONVOCATORIA</strong>
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Descripción de actividad: Emisión de la convocatoria </mat-label>
+                  <mat-date-range-input [formGroup]="secondFormGroup" [rangePicker]="picker1">
+                    <input matStartDate formControlName="start" placeholder="Inicio" [(ngModel)]="fechae1">
+                    <input matEndDate formControlName="end" placeholder="Fin"  [(ngModel)]="fechae2">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker1></mat-date-range-picker>
+                  <mat-error *ngIf="secondFormGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                  <mat-error *ngIf="secondFormGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Descripción de actividad: Recepción de solicitudes  </mat-label>
+                  <mat-date-range-input [formGroup]="secondFormGroup" [rangePicker]="picker2">
+                    <input matStartDate formControlName="start1" placeholder="Inicio" [(ngModel)]="fechar1">
+                    <input matEndDate formControlName="end1" placeholder="Fin" [(ngModel)]="fechar2">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker2></mat-date-range-picker>
+                  <mat-error *ngIf="secondFormGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                  <mat-error *ngIf="secondFormGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Descripción de actividad: Proceso de selección  </mat-label>
+                  <mat-date-range-input [formGroup]="secondFormGroup" [rangePicker]="picker3">
+                    <input matStartDate formControlName="start2" placeholder="Inicio" [(ngModel)]="fechap1">
+                    <input matEndDate formControlName="end2" placeholder="Fin" [(ngModel)]="fechap2">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker3></mat-date-range-picker>
+                  <mat-error *ngIf="secondFormGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                  <mat-error *ngIf="secondFormGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Descripción de actividad: Notificación de resultados </mat-label>
+                  <mat-date-range-input [formGroup]="secondFormGroup" [rangePicker]="picker4">
+                    <input matStartDate formControlName="start3" placeholder="Inicio"  [(ngModel)]="fechan1">
+                    <input matEndDate formControlName="end3" placeholder="Fin"  [(ngModel)]="fechan2">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker4></mat-date-range-picker>
+                  <mat-error *ngIf="secondFormGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                  <mat-error *ngIf="secondFormGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <button mat-button matStepperPrevious color="warn">Atras</button>
+                <button mat-button matStepperNext color="primary">Siguente</button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step  [stepControl]="tercerFormGroup">
+        <form [formGroup]="tercerFormGroup">
+          <ng-template matStepLabel>Documento</ng-template>
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Anexo 2</mat-card-title>
+              <mat-card-subtitle>Generar Anexo</mat-card-subtitle>
+            </mat-card-header>
+            <h4>Debe obtner el anexo en "Obtener Anexo" y posteriormente debera firmar y subir de en formato PDF</h4>
+            <div>
+              <button mat-raised-button color="primary" (click)="generarDocumento(proyectoselect,fechas)">Obtener Anexo</button>
+              <mat-form-field appearance="outline" style="width: 75%; margin-left: 10px" >
+                <ngx-mat-file-input accept="application/pdf" (change)="subirDocumento(proyectoselect,$event.target.files)"  formControlName="docx" placeholder="Subir Documento"></ngx-mat-file-input>
+                <mat-icon matSuffix>folder</mat-icon>
+              </mat-form-field>
+            </div>
+            <mat-card-content>
+              <div>
+                <button mat-button matStepperPrevious color="primary">Atras</button>
+                <button mat-button matStepperNext color="warn">Siguente</button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Confirmar</ng-template>
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>Informacion Final</mat-card-title>
+            <mat-card-subtitle>Generar Anexo</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <br>
+            <mat-card-content>
+              <h2 title> La convocatoria sera enviada a los estudiantes que pertenecen a la
+                carreta:</h2>
+              <mat-divider></mat-divider>
+              <h2>INFORMACIÓN:</h2>
+              <h3>Convocatoria Nª: {{anexo2.numeroConvocatoria}}</h3>
+              <h3>Proyecto: {{anexo2.nombreProyecto}}</h3>
+              <h3>Responsable: {{anexo2.nombreResponsable}}</h3>
+              <h3>Carrera: {{anexo2.carrera}} </h3>
+              <h3>Fecha máxima de postulación: {{anexo2.fechaMaxRecepcion | date:"longDate"}}</h3>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <br>
+            <div>
+              <button mat-button matStepperPrevious color="primary">Atras</button>
+              <button mat-flat-button (click)="guardarAnexo2(proyectoselect)" color="warn">Crear</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-step>
+    </mat-stepper>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card>
+      <mat-card-title>NO EXISTEN PROYECTOS ACTUALMENTE BENEFICARIAS REGISTRADAS</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

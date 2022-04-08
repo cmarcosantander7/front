@@ -1,0 +1,101 @@
+.mat-stepper-horizontal {
+  margin-top: 8px;
+}
+.example-card {
+  margin: 0 auto;
+  max-width: 950px;
+}
+mat-form-field{
+  width: 100%;
+}
+
+mat-list-option[aria-selected="true"] {
+  background: rgba(255, 204, 0, 0.7);
+}
+
+.example-header-image {
+  background-image: url('src/assets/images/LogoCiculo.png');
+  background-size: cover;
+}
+
+.mat-stepper-vertical {
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
+.example-card {
+  text-align: center;
+  border: 1px solid  #0c3255;
+  border-inline: 5px solid  #0c3255;
+  writing-mode: horizontal-tb;
+  height: max-content;
+}
+.example-header-image {
+  background-image: url('src/assets/images/LogoCiculo.png');
+  background-size: cover;
+  margin: 0;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-full-width {
+  width: 90%;
+}
+#contenedor{
+  overflow: hidden;
+}
+#cabecera{
+  height:20%;
+}
+#izquierda{
+  text-align: start;
+  height:50%;
+  float:left;
+  width:50%;
+}
+#derecha{
+  height:50%;
+  float:right;
+  width:50%;
+  text-align: start;
+}
+#contenedor1{
+  overflow: hidden;
+}
+#izquierda1{
+  text-align: start;
+  float:left;
+  width:50%;
+}
+#derecha1{
+  float:right;
+  width:50%;
+  text-align: end;
+}
+.example-viewport {
+  height: 250px;
+}
+.example-viewport1 {
+  height: 150px;
+}
+.example-panel {
+  float: top;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid  #0c3255;
+  border-inline: 5px solid  #0c3255;
+  writing-mode: horizontal-tb;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.myFile{
+  color: #0c3255;
+}
+h4{
+  color: #0c3255;
+  font-style: inherit;
+  font-size: medium;
+}
+

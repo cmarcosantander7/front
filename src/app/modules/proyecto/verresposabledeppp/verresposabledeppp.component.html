@@ -1,0 +1,50 @@
+<div *ngIf="issloading==false">
+  <div *ngIf="isexist">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Responsable de Practicas Pre Profesionales</mat-card-title>
+        <mat-card-subtitle>Responsable actual con el cargo</mat-card-subtitle>
+        <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="quitarCargo(responsableppp)">
+            <mat-icon color="warn">delete_forever</mat-icon>
+            <span>Eliminar</span>
+          </button>
+        </mat-menu>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <br>
+        <h2>INFORMACIÓN:</h2>
+        <h3>Cédula: {{responsableppp.cedula}}</h3>
+        <h3>Nombres: {{responsableppp.nombres_completo}}</h3>
+        <h3>Titulo: {{responsableppp.titulo}}</h3>
+        <h3>Tiempo: {{responsableppp.docente_tipo_tiempo}} </h3>
+        <h3>Periado: {{responsableppp.fecha_inicio_periodo | date:"longDate"}}--{{responsableppp.fecha_fin_periodo | date:"longDate"}} </h3>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Responsable de Practicas Pre Profesionales</mat-card-title>
+        <mat-card-subtitle>Responsable actual con el cargo</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p> NO EXISTE NINGUN RESPONSABLE ACTUALMENTE</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>

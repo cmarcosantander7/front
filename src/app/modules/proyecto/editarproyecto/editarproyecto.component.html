@@ -1,0 +1,376 @@
+<div *ngIf="issloading==false">
+  <div *ngIf="isexist">
+    <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Datos del Proyecto</ng-template>
+          <mat-card class="example-card">
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-subtitle>CREACIÓN DEL PROYECTO</mat-card-subtitle>
+            <mat-card-title>INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY</mat-card-title>
+            <p>{{carrera}}</p>
+            <mat-divider inset></mat-divider>
+            <br>
+            <mat-card-content>
+              <h3>DATOS PRINCIPALES DEL PROYECTO DE VINCULACIÓN</h3>
+              <mat-grid-list cols="3" rowHeight="5:1">
+                <mat-grid-tile colspan="2">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Nombre del Proyecto</mat-label>
+                    <input matInput formControlName="nombre" placeholder="Ex. Fortalecimiento de sector turis...." [(ngModel)]="proyecto.nombre">
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile  colspan="1">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Programa de Vinculación</mat-label>
+                    <input matInput formControlName="programa" placeholder="Ex. Beneficencias" [(ngModel)]="proyecto.programaVinculacion">
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Linea de Accion</mat-label>
+                    <mat-select formControlName="linea" [(ngModel)]="proyecto.lineaaccion">
+                      <mat-option value="Tecnica">Asesoría Técnica</mat-option>
+                      <mat-option value="Comunitario" selected>Trabajo Comunitario</mat-option>
+                      <mat-option value="Capacitación" selected>Capacitación</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="estado" [(ngModel)]="proyecto.estado">
+                      <mat-option  value="true">Vigente</mat-option>
+                      <mat-option  value="false" selected>No Vigente</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Alcance Territorial</mat-label>
+                    <mat-select formControlName="alcance" [(ngModel)]="proyecto.alcanceTerritorial">
+                      <mat-option value="Nacional">Nacional</mat-option>
+                      <mat-option value="Provincial">Provincial</mat-option>
+                      <mat-option value="Cantonal">Cantonal</mat-option>
+                      <mat-option value="Parroquial">Parroquial</mat-option>
+                      <mat-option value="Institucional">Institucional</mat-option>
+                      <mat-option value="Internacional">Internacional</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile  colspan="1">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Entidad Beneficiaria</mat-label>
+                    <mat-select formControlName="proyecto" [(ngModel)]="proyecto.entidadbeneficiaria">
+                      <mat-option  *ngFor="let item of entidadBeneficiaria" [value]="item.idEntidad">{{item.nombre}} {{item.representante}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Fecha de Inicio y de Fin del Proyecto</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate formControlName="start" placeholder="Inicio" [(ngModel)]="proyecto.fechaInicio">
+                      <input matEndDate formControlName="end" placeholder="Fin" [(ngModel)]="proyecto.fechaFin">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Plazo de ejecución en meses</mat-label>
+                    <input matInput formControlName="plazo" placeholder="Ex. 2 meses" [(ngModel)]="proyecto.plazoEjecucion">
+                  </mat-form-field>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </mat-card-content>
+            <mat-divider inset></mat-divider>
+            <br>
+            <div style="text-align: end">
+              <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+            </div>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup" >
+          <ng-template matStepLabel>Objetivo General y Especifico</ng-template>
+          <mat-card class="example-card">
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-subtitle>CREACIÓN DEL PROYECTO</mat-card-subtitle>
+            <mat-card-title>INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY</mat-card-title>
+            <p>{{carrera}}</p>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-card-content>
+              <h3>OBJETIVO GENERAL</h3>
+              <mat-grid-list cols="3" rowHeight="6:1">
+                <mat-form-field class="example-full-width"  appearance="outline">
+                  <mat-label>INGRESE EL OBJETIVO GENERAL</mat-label>
+                  <textarea matInput formControlName="objetivo" placeholder="Ex. Desarrillar un sistema de....." [(ngModel)]="proyecto.objetivoGeneral"></textarea>
+                </mat-form-field>
+                <div style="margin-top: 15px">
+                  <h3>OBJETIVOS ESPECIFICOS DEL PROYECTO</h3>
+                  <mat-grid-tile colspan="3" >
+                    <button mat-fab color="primary" (click)="onAddRow()" *ngIf="secondFormGroup.get('rows')"><mat-icon>add_circle</mat-icon></button>
+                  </mat-grid-tile>
+                  <mat-grid-tile colspan="3" *ngFor="let row of secondFormGroup.get('rows')?.controls;let index = index;">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Objetivo Especifico {{index}}</mat-label>
+                      <input matInput [formControl]="row.get('descripcion')" placeholder="Ex. Realizar...">
+                    </mat-form-field>
+                    <span class="example-spacer"></span>
+                    <button mat-mini-fab color="warn"  style="margin-left: 50px" (click)="onRemoveRow(index)"><mat-icon>delete_sweep</mat-icon></button>
+                  </mat-grid-tile>
+                </div>
+              </mat-grid-list>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <br>
+            <div style="text-align: end">
+              <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+              <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+            </div>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup" >
+          <ng-template matStepLabel>Docente de Apoyo y Director de proyecto</ng-template>
+          <mat-card class="example-card">
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-subtitle>CREACIÓN DEL PROYECTO</mat-card-subtitle>
+            <mat-card-title>INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY</mat-card-title>
+            <p>{{carrera}}</p>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-card-content>
+              <div id ="contenedor">
+                <div id ="cabecera">
+                  <h4>Seleccine del director del Proyecto</h4>
+                  <mat-form-field appearance="outline" style="width: 90%">
+                    <mat-label>BUSCAR DOCENTE</mat-label>
+                    <input matInput  placeholder="FILTRAR" [formControl]="myControl">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  </mat-form-field>
+                  <cdk-virtual-scroll-viewport appendOnly itemSize="40" class="example-viewport1">
+                    <mat-selection-list #shoes [multiple]="false" (selectionChange)="selectionDirector($event)">
+                      <mat-list-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option.cedula}} | {{option.nombres_completo}}
+                      </mat-list-option>
+                    </mat-selection-list>
+                  </cdk-virtual-scroll-viewport>
+                  <br>
+                  <p style="font-size: medium">
+                    Director seleccionado: {{docentesselectDirector.cedula}} | {{docentesselectDirector.nombres_completo}}
+                  </p>
+                </div>
+                <mat-divider></mat-divider>
+                <br>
+                <h4>Seleccione los docentes de Apoyo del Proyecto</h4>
+                <div id ="izquierda">
+                  <mat-form-field appearance="outline" style="width: 90%">
+                    <mat-label>BUSCAR DOCENTE</mat-label>
+                    <input matInput  placeholder="FILTRAR" [formControl]="myControl1">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  </mat-form-field>
+                  <br>
+                  <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+                    <div *ngFor="let docente of filteredOptionsapoyo | async">
+                      <mat-expansion-panel (opened)="panelOpenState = true"
+                                           (closed)="panelOpenState = false" class="example-panel">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{docente.cedula}} | {{docente.nombres_completo}}
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div style="float:left; width:80%;">
+                          <p>Tiempo: {{docente.docente_tipo_tiempo}}</p>
+                          <p>Titulo:{{docente.titulo}}</p>
+                          <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                Materias:
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngFor="let materia of docente.materias">
+                              <p>{{materia.nombre}}</p>
+                            </div>
+                          </mat-expansion-panel>
+                          <br>
+                          <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                Carreras:
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngFor="let carreras of docente.carreas">
+                              <p>{{carreras.nombrecarrera}}</p>
+                            </div>
+                          </mat-expansion-panel>
+                        </div>
+                        <div style="float:right; width:20%;">
+                          <span class="example-spacer"></span>
+                          <button mat-button color="primary" (click)="addApoyo(docente)">Agregar
+                            <mat-icon matBadgeColor="warn">keyboard_arrow_right</mat-icon>
+                          </button>
+                        </div>
+                      </mat-expansion-panel>
+                    </div>
+                  </cdk-virtual-scroll-viewport>
+                  <br>
+                </div>
+                <div id ="derecha">
+                  <mat-form-field appearance="outline" style="width: 90%">
+                    <mat-label>BUSCAR DOCENTE</mat-label>
+                    <input matInput  placeholder="FILTRAR">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  </mat-form-field>
+                  <br>
+                  <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+                    <div *ngFor="let docente of docentesselectApoyo">
+                      <mat-expansion-panel (opened)="panelOpenState = true"
+                                           (closed)="panelOpenState = false" class="example-panel">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{docente.cedula}} | {{docente.nombres_completo}}
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div style="float:left; width:80%;">
+                          <p>Tiempo: {{docente.docente_tipo_tiempo}}</p>
+                          <p>Titulo:{{docente.titulo}}</p>
+                          <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                Materias:
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngFor="let materia of docente.materias">
+                              <p>{{materia.nombre}}</p>
+                            </div>
+                          </mat-expansion-panel>
+                          <br>
+                          <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                Carreras:
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngFor="let carreras of docente.carreas">
+                              <p>{{carreras.nombrecarrera}}</p>
+                            </div>
+                          </mat-expansion-panel>
+                        </div>
+                        <div style="float:right; width:20%;">
+                          <span class="example-spacer"></span>
+                          <button mat-button color="primary" (click)="removeApoyo(docente)">
+                            <mat-icon matBadgeColor="warn">keyboard_arrow_left</mat-icon>
+                            Remover
+                          </button>
+                        </div>
+                      </mat-expansion-panel>
+                    </div>
+                  </cdk-virtual-scroll-viewport>
+                </div>
+              </div>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <br>
+            <div style="text-align: end">
+              <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+              <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+            </div>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="fourFormGroup" >
+        <form [formGroup]="fourFormGroup">
+          <ng-template matStepLabel>Documentos</ng-template>
+          <mat-card class="example-card">
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-subtitle>CREACIÓN DEL PROYECTO</mat-card-subtitle>
+            <mat-card-title>INSTITUTO SUPERIOR TECNOLOGICO DEL AZUAY</mat-card-title>
+            <p>{{carrera}}</p>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-card-content>
+              <p>Para seguir con la creación del proyecto debe *DESCARGAR EL ANENXO* para cada
+                docente miembro y firmarlo, debe *SUBIR ESTE DOCUENTO EN TIPO .pdf*; Sea resposable con
+                con el documento a subir, para llevar un buen control esto le evitara problemas futuros.</p>
+              <br>
+              <div *ngFor="let anexo of anexo1">
+                <mat-card class="example-panel">
+                  <div id ="contenedor1">
+                    <div id ="izquierda1">
+                      <h3>Cédula: {{anexo.cedulaDelegado}}
+                        <br> Nombre: {{anexo.nombreDelegado}}
+                        <br> Rol: {{anexo.nombreRol}}
+                      </h3>
+                    </div>
+                    <div id ="derecha1">
+                      <button mat-raised-button color="primary" (click)="generate(anexo)">Descargar el Anexo</button>
+                      <mat-form-field appearance="outline" style="width: 70%; margin-left: 10px" >
+                        <ngx-mat-file-input accept="application/pdf" (change)="generarDocumento(anexo,$event.target.files)" placeholder="Subir Documento" required="required"></ngx-mat-file-input>
+                        <mat-icon matSuffix>folder</mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-card>
+              </div>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <br>
+            <div style="text-align: end">
+              <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+              <button mat-fab matStepperNext color="primary"><mat-icon>queue_play_next</mat-icon></button>
+            </div>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Confirmar</ng-template>
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>CREACIÓN DEL PROYECTO</mat-card-title>
+          </mat-card-header>
+          <p>Se guardara todos los los datos ingresdos, se pobra editar o eliminar el proyecto
+            unicamente si este no está en proceso de Vinculación<p>
+          <mat-divider></mat-divider>
+          <br>
+          <mat-card-content>
+          <h2>INFORMACIÓN:</h2>
+          <h3>Nombre del proyecto: {{proyecto.nombre}}</h3>
+          <h3>Fecha de Inicio: {{proyecto.fechaInicio | date:"longDate"}}</h3>
+          <h3>Fecha de Finalización: {{proyecto.fechaFin | date:"longDate"}}</h3>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <br>
+          <div style="text-align: end">
+            <button mat-fab matStepperPrevious color="warn" style="margin-right: 5px"><mat-icon>undo</mat-icon></button>
+            <button mat-fab color="primary" (click)="guardar(proyecto,anexo1)"><mat-icon>save</mat-icon></button>
+          </div>
+        </mat-card>
+      </mat-step>
+    </mat-stepper>
+  </div>
+  <div *ngIf="isexist==false">
+    <mat-card style="margin: 0 auto; width: 600px;">
+      <mat-card-header style="text-align: start">
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Proyecto de vinculacón necesita a un responsable de Practicas Pre Profesionales</mat-card-title>
+        <mat-card-subtitle>Responsable actual con el cargo</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p> NO EXISTE NINGUN RESPONSABLE ACTUALMENTE</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<ng-container *ngIf="issloading">
+  <div class="bss-loader" style="margin: auto;">
+    <center>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </center>
+  </div>
+</ng-container>
